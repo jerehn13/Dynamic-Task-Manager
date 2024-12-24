@@ -3,76 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dynamic Task Manager</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      background-color: #f4f4f9;
-    }
-    h1 {
-      text-align: center;
-      color: #333;
-    }
-    .task-manager {
-      max-width: 600px;
-      margin: 0 auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .task-manager input, .task-manager button {
-      width: calc(100% - 20px);
-      margin: 10px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    .task-manager button {
-      background: #007bff;
-      color: #fff;
-      cursor: pointer;
-    }
-    .task-manager button:hover {
-      background: #0056b3;
-    }
-    .tasks {
-      list-style: none;
-      padding: 0;
-    }
-    .tasks li {
-      background: #f9f9f9;
-      margin: 10px 0;
-      padding: 10px;
-      border-radius: 4px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .tasks li .actions button {
-      margin-left: 5px;
-      padding: 5px 10px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .tasks li .actions .edit {
-      background: #ffc107;
-      color: #fff;
-    }
-    .tasks li .actions .delete {
-      background: #dc3545;
-      color: #fff;
-    }
-    .tasks li .actions .save {
-      background: #28a745;
-      color: #fff;
-    }
-  </style>
+  <title>Dynamic Task Manager with Dark Mode</title>
+  
 </head>
 <body>
   <h1>Dynamic Task Manager</h1>
+  <div class="dark-mode-toggle">
+    <button id="darkModeToggle">Enable Dark Mode</button>
+  </div>
   <div class="task-manager">
     <input type="text" id="taskInput" placeholder="Enter a new task">
     <button onclick="addTask()">Add Task</button>
@@ -81,57 +19,4 @@
     </ul>
   </div>
 
-  <script>
-    const taskInput = document.getElementById('taskInput');
-    const taskList = document.getElementById('taskList');
-
-    function addTask() {
-      const taskText = taskInput.value.trim();
-      if (taskText === '') {
-        alert('Please enter a task!');
-        return;
-      }
-
-      const taskItem = document.createElement('li');
-      taskItem.innerHTML = `
-        <span class="task-text">${taskText}</span>
-        <div class="actions">
-          <button class="edit" onclick="editTask(this)">Edit</button>
-          <button class="delete" onclick="deleteTask(this)">Delete</button>
-        </div>
-      `;
-      taskList.appendChild(taskItem);
-      taskInput.value = ''; // Clear input field
-    }
-
-    function editTask(button) {
-      const taskItem = button.closest('li');
-      const taskText = taskItem.querySelector('.task-text');
-
-      if (button.innerText === 'Edit') {
-        const editInput = document.createElement('input');
-        editInput.type = 'text';
-        editInput.value = taskText.innerText;
-        taskItem.insertBefore(editInput, taskText);
-        taskText.style.display = 'none';
-        button.innerText = 'Save';
-      } else {
-        const editInput = taskItem.querySelector('input');
-        if (editInput.value.trim() === '') {
-          alert('Task cannot be empty!');
-          return;
-        }
-        taskText.innerText = editInput.value.trim();
-        taskText.style.display = '';
-        editInput.remove();
-        button.innerText = 'Edit';
-      }
-    }
-
-    function deleteTask(button) {
-      const taskItem = button.closest('li');
-      taskList.removeChild(taskItem);
-    }
-  </script>
-</body>
-</html>
+  
