@@ -1,22 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dynamic Task Manager with Dark Mode</title>
-  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Dynamic Task Manager</h1>
-  <div class="dark-mode-toggle">
-    <button id="darkModeToggle">Enable Dark Mode</button>
-  </div>
-  <div class="task-manager">
-    <input type="text" id="taskInput" placeholder="Enter a new task">
-    <button onclick="addTask()">Add Task</button>
-    <ul class="tasks" id="taskList">
-      <!-- Task items will dynamically appear here -->
-    </ul>
-  </div>
+    <header>
+        <h1>Task Manager</h1>
+        <label class="theme-switch">
+            <input type="checkbox" id="theme-toggle">
+            <span class="slider"></span>
+            <span class="label">Dark Mode</span>
+        </label>
+    </header>
+    
+    <main class="container">
+        <section class="task-input-section">
+            <form id="task-form">
+                <input type="text" id="task-input" placeholder="Enter a task" required>
+                <button type="button" id="add-task">Add Task</button>
+            </form>
+        </section>
+        
+        <section class="task-filter-section">
+            <label for="filter">Filter tasks:</label>
+            <select id="filter">
+                <option value="all">All Tasks</option>
+                <option value="completed">Completed Tasks</option>
+                <option value="pending">Pending Tasks</option>
+            </select>
+        </section>
 
-  
+        <section class="task-list-section">
+            <ul id="task-list"></ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Jeremiah Essilfie.</p>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

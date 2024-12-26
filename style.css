@@ -1,122 +1,36 @@
-:root {
-    --bg-color: #f4f4f9;
-    --text-color: #333;
-    --task-bg: #fff;
-    --button-bg: #007bff;
-    --button-text: #fff;
-    --edit-bg: #ffc107;
-    --delete-bg: #dc3545;
-    --save-bg: #28a745;
-    --shadow-color: rgba(0, 0, 0, 0.1);
-  }
-
-  body.dark {
-    --bg-color: #181818;
-    --text-color: #f0f0f0;
-    --task-bg: #242424;
-    --button-bg: #0056b3;
-    --button-text: #fff;
-    --edit-bg: #ffca2c;
-    --delete-bg: #e74c3c;
-    --save-bg: #34c759;
-    --shadow-color: rgba(255, 255, 255, 0.1);
-  }
-
-  body {
+body {
     font-family: Arial, sans-serif;
-    margin: 20px;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-
-  h1 {
-    text-align: center;
-  }
-
-  .task-manager {
-    max-width: 600px;
-    margin: 0 auto;
-    background: var(--task-bg);
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px var(--shadow-color);
-  }
+}
 
-  .task-manager input, .task-manager button {
-    width: calc(100% - 20px);
-    margin: 10px 0;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
-  }
+.dark-mode {
+    background-color: #121212;
+    color: white;
+}
 
-  .task-manager button {
-    background: var(--button-bg);
-    color: var(--button-text);
-    cursor: pointer;
-  }
+.light-mode {
+    background-color: #f4f4f4;
+    color: black;
+}
 
-  .task-manager button:hover {
-    opacity: 0.9;
-  }
-
-  .tasks {
-    list-style: none;
+.task-list {
+    list-style-type: none;
     padding: 0;
-  }
+}
 
-  .tasks li {
-    background: var(--task-bg);
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 4px;
+.task-item {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 4px var(--shadow-color);
-  }
+    margin: 10px 0;
+}
 
-  .tasks li .actions button {
-    margin-left: 5px;
+.task-item.completed {
+    text-decoration: line-through;
+    color: gray;
+}
+
+button {
     padding: 5px 10px;
-    border: none;
-    border-radius: 4px;
+    margin: 0 5px;
     cursor: pointer;
-  }
-
-  .tasks li .actions .edit {
-    background: var(--edit-bg);
-    color: var(--button-text);
-  }
-
-  .tasks li .actions .delete {
-    background: var(--delete-bg);
-    color: var(--button-text);
-  }
-
-  .tasks li .actions .save {
-    background: var(--save-bg);
-    color: var(--button-text);
-  }
-
-  .dark-mode-toggle {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
-
-  .dark-mode-toggle button {
-    background: var(--button-bg);
-    color: var(--button-text);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-  }
-
-  .dark-mode-toggle button:hover {
-    opacity: 0.9;
-  }
+}
