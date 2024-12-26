@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
         taskInput.value = ''; // Clear the input field
     });
 
-    // Handle actions on the task list (Complete/Delete)
+    // Handle actions on the task list (Complete/Delete/Edit)
     taskList.addEventListener('click', (event) => {
         const target = event.target;
         const taskItem = target.closest('.task-item');
@@ -42,6 +42,8 @@ document.addEventListener("DOMContentLoaded", () => {
             toggleTaskCompletion(taskId);
         } else if (target.classList.contains('delete-btn')) {
             deleteTask(taskId);
+        } else if (target.classList.contains('edit-btn')) {
+            editTask(taskId);
         }
     });
 
@@ -60,6 +62,21 @@ document.addEventListener("DOMContentLoaded", () => {
         tasks = tasks.filter((task) => task.id !== taskId);
         saveTasksToLocalStorage();
         renderTasks();
+    }
+
+    // Edit a task
+    function editTask(taskId) {
+        const task = tasks.find((task) => task.id === taskId);
+        if (task) {
+            const newText = prompt('Edit your task:', task.text);
+            if (newText !== null && newText.trim() !== '') {
+                task.text = newText.trim();
+                saveTasksToLocalStorage();
+                renderTasks();
+            } else {
+                alert('Task text cannot be empty!');
+            }
+        }
     }
 
     // Render tasks
@@ -83,6 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <span>${task.text}</span>
                     <div>
                         <button class="complete-btn">${task.completed ? 'Undo' : 'Complete'}</button>
+                        <button class="edit-btn">Edit</button>
                         <button class="delete-btn">Delete</button>
                     </div>
                 `;
