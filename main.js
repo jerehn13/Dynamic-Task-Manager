@@ -145,3 +145,31 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.add('light-mode');
     renderTasks();
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    var themeToggle = document.querySelector('#theme-toggle');
+    var body = document.body;
+
+    // Check localStorage for saved theme, default to 'light-mode'
+    var savedTheme = localStorage.getItem('theme') || 'light-mode';
+
+    // Apply the saved theme to the body
+    body.classList.remove('dark-mode', 'light-mode');
+    body.classList.add(savedTheme);
+
+    // Set the toggle state based on the saved theme
+    themeToggle.checked = (savedTheme === 'dark-mode');
+
+    // Event listener for theme toggle
+    themeToggle.addEventListener('change', function () {
+        var isDarkMode = themeToggle.checked;
+        var newTheme = isDarkMode ? 'dark-mode' : 'light-mode';
+
+        // Remove old theme class and add the new one
+        body.classList.remove('dark-mode', 'light-mode');
+        body.classList.add(newTheme);
+
+        // Save the current theme in localStorage
+        localStorage.setItem('theme', newTheme);
+    });
+});

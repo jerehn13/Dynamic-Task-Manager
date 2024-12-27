@@ -34,3 +34,82 @@ button {
     margin: 0 5px;
     cursor: pointer;
 }
+/* Theme Switch Container */
+.theme-switch {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+/* Hide the default checkbox */
+.theme-switch input[type="checkbox"] {
+    display: none;
+}
+
+/* Slider Styling */
+.theme-switch .slider {
+    position: relative;
+    width: 50px;
+    height: 25px;
+    background-color: #ccc;
+    border-radius: 50px;
+    transition: background-color 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.theme-switch .slider::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Sun and Moon Icons */
+.theme-switch .icon {
+    font-size: 16px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.theme-switch .sun {
+    color: #f39c12; /* Sun color */
+}
+
+.theme-switch .moon {
+    color: #8e44ad; /* Moon color */
+}
+
+/* Dark Mode Active */
+.theme-switch input[type="checkbox"]:checked + .slider {
+    background-color: #007bff;
+}
+
+.theme-switch input[type="checkbox"]:checked + .slider::before {
+    transform: translateX(25px); /* Move the knob */
+}
+
+.theme-switch input[type="checkbox"]:checked + .slider .moon {
+    opacity: 1; /* Show moon icon */
+}
+
+.theme-switch input[type="checkbox"]:checked + .slider .sun {
+    opacity: 0; /* Hide sun icon */
+}
+
+.theme-switch input[type="checkbox"]:not(:checked) + .slider .sun {
+    opacity: 1; /* Show sun icon */
+}
+
+.theme-switch input[type="checkbox"]:not(:checked) + .slider .moon {
+    opacity: 0; /* Hide moon icon */
+}
