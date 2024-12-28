@@ -7,10 +7,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let tasks = loadTasksFromLocalStorage();
 
-    // Add a new task
+    
     addTaskButton.addEventListener('click', (e) => {
-        e.preventDefault(); // Prevent form submission
-        const taskText = taskInput.value.trim(); // Trim to remove extra spaces
+        e.preventDefault(); 
+        const taskText = taskInput.value.trim(); 
 
         if (taskText === '') {
             alert('Task cannot be empty!');
@@ -26,15 +26,15 @@ document.addEventListener("DOMContentLoaded", () => {
         tasks.push(newTask);
         saveTasksToLocalStorage();
         renderTasks();
-        taskInput.value = ''; // Clear the input field
+        taskInput.value = ''; 
     });
 
-    // Handle actions on the task list (Complete/Delete/Edit)
+    
     taskList.addEventListener('click', (event) => {
         const target = event.target;
         const taskItem = target.closest('.task-item');
 
-        if (!taskItem) return; // Ensure only valid task items are handled
+        if (!taskItem) return; 
 
         const taskId = parseInt(taskItem.dataset.id, 10);
 
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Toggle task completion
+    
     function toggleTaskCompletion(taskId) {
         const task = tasks.find((task) => task.id === taskId);
         if (task) {
@@ -57,14 +57,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Delete a task
+    
     function deleteTask(taskId) {
         tasks = tasks.filter((task) => task.id !== taskId);
         saveTasksToLocalStorage();
         renderTasks();
     }
 
-    // Edit a task
     function editTask(taskId) {
         const task = tasks.find((task) => task.id === taskId);
         if (task) {
@@ -79,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Render tasks
+   
     function renderTasks() {
         taskList.innerHTML = '';
         const filterValue = filterSelect.value;
@@ -109,10 +108,10 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     }
 
-    // Filter tasks
+    
     filterSelect.addEventListener('change', renderTasks);
 
-    // Toggle theme
+   
     themeToggle.addEventListener('change', () => {
         if (themeToggle.checked) {
             document.body.classList.add('dark-mode');
@@ -123,12 +122,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Save tasks to localStorage
+   
     function saveTasksToLocalStorage() {
         localStorage.setItem('tasks', JSON.stringify(tasks));
     }
 
-    // Load tasks from localStorage
+    
     function loadTasksFromLocalStorage() {
         const savedTasks = localStorage.getItem('tasks');
         if (!savedTasks) return [];
@@ -141,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Initialize the app
+   
     document.body.classList.add('light-mode');
     renderTasks();
 });
@@ -150,26 +149,26 @@ document.addEventListener('DOMContentLoaded', function () {
     var themeToggle = document.querySelector('#theme-toggle');
     var body = document.body;
 
-    // Check localStorage for saved theme, default to 'light-mode'
+   
     var savedTheme = localStorage.getItem('theme') || 'light-mode';
 
-    // Apply the saved theme to the body
+    
     body.classList.remove('dark-mode', 'light-mode');
     body.classList.add(savedTheme);
 
-    // Set the toggle state based on the saved theme
+   
     themeToggle.checked = (savedTheme === 'dark-mode');
 
-    // Event listener for theme toggle
+    
     themeToggle.addEventListener('change', function () {
         var isDarkMode = themeToggle.checked;
         var newTheme = isDarkMode ? 'dark-mode' : 'light-mode';
 
-        // Remove old theme class and add the new one
+        
         body.classList.remove('dark-mode', 'light-mode');
         body.classList.add(newTheme);
 
-        // Save the current theme in localStorage
+        
         localStorage.setItem('theme', newTheme);
     });
 });
