@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let tasks = loadTasksFromLocalStorage();
 
-    
     addTaskButton.addEventListener('click', (e) => {
         e.preventDefault(); 
         const taskText = taskInput.value.trim(); 
@@ -29,7 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
         taskInput.value = ''; 
     });
 
-    
     taskList.addEventListener('click', (event) => {
         const target = event.target;
         const taskItem = target.closest('.task-item');
@@ -47,7 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    
     function toggleTaskCompletion(taskId) {
         const task = tasks.find((task) => task.id === taskId);
         if (task) {
@@ -57,7 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    
     function deleteTask(taskId) {
         tasks = tasks.filter((task) => task.id !== taskId);
         saveTasksToLocalStorage();
@@ -78,7 +74,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-   
     function renderTasks() {
         taskList.innerHTML = '';
         const filterValue = filterSelect.value;
@@ -94,6 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const taskItem = document.createElement('li');
                 taskItem.className = `task-item ${task.completed ? 'completed' : ''}`;
                 taskItem.dataset.id = task.id;
+                taskItem.draggable = true; // Make task draggable
 
                 taskItem.innerHTML = `
                     <span>${task.text}</span>
@@ -108,10 +104,8 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     }
 
-    
     filterSelect.addEventListener('change', renderTasks);
 
-   
     themeToggle.addEventListener('change', () => {
         if (themeToggle.checked) {
             document.body.classList.add('dark-mode');
@@ -122,12 +116,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-   
     function saveTasksToLocalStorage() {
         localStorage.setItem('tasks', JSON.stringify(tasks));
     }
 
-    
     function loadTasksFromLocalStorage() {
         const savedTasks = localStorage.getItem('tasks');
         if (!savedTasks) return [];
@@ -140,35 +132,96 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-   
     document.body.classList.add('light-mode');
     renderTasks();
+
+    // Drag-and-Drop Functionality
+    let draggedElement = null;
+
+    taskList.addEventListener('dragstart', (event) => {
+        const taskItem = event.target.closest('.task-item');
+        if (taskItem) {
+            draggedElement = taskItem;
+            event.dataTransfer.effectAllowed = 'move';
+            taskItem.style.opacity = '0.5';
+        }
+    });
+
+    taskList.addEventListener('dragover', (event) => {
+        event.preventDefault(); // Allow dropping
+        const taskItem = event.target.closest('.task-item');
+        if (taskItem && taskItem !== draggedElement) {
+            taskItem.style.border = '2px dashed #000'; // Visual feedback for the drop target
+        }
+    });
+
+    taskList.addEventListener('dragleave', (event) => {
+        const taskItem = event.target.closest('.task-item');
+        if (taskItem) {
+            taskItem.style.border = ''; // Remove visual feedback
+        }
+    });
+
+    taskList.addEventListener('drop', (event) => {
+        event.preventDefault();
+        const taskItem = event.target.closest('.task-item');
+        if (taskItem && draggedElement && taskItem !== draggedElement) {
+            // Insert the dragged element before or after the drop target
+            taskList.insertBefore(
+                draggedElement,
+                draggedElement.compareDocumentPosition(taskItem) & Node.DOCUMENT_POSITION_PRECEDING
+                    ? taskItem.nextSibling
+                    : taskItem
+            );
+        }
+
+        updateTaskOrder();
+    });
+
+    taskList.addEventListener('dragend', () => {
+        if (draggedElement) {
+            draggedElement.style.opacity = '1';
+        }
+
+        Array.from(taskList.children).forEach((item) => {
+            item.style.border = '';
+        });
+
+        draggedElement = null;
+    });
+
+    function updateTaskOrder() {
+        const taskItems = Array.from(taskList.children);
+
+        // Reorder the tasks array based on the DOM order
+        tasks = taskItems.map((item) => {
+            const taskId = parseInt(item.dataset.id, 10);
+            return tasks.find((task) => task.id === taskId);
+        });
+
+        // Save the reordered tasks to localStorage
+        saveTasksToLocalStorage();
+    }
 });
 
 document.addEventListener('DOMContentLoaded', function () {
     var themeToggle = document.querySelector('#theme-toggle');
     var body = document.body;
 
-   
     var savedTheme = localStorage.getItem('theme') || 'light-mode';
 
-    
     body.classList.remove('dark-mode', 'light-mode');
     body.classList.add(savedTheme);
 
-   
     themeToggle.checked = (savedTheme === 'dark-mode');
 
-    
     themeToggle.addEventListener('change', function () {
         var isDarkMode = themeToggle.checked;
         var newTheme = isDarkMode ? 'dark-mode' : 'light-mode';
 
-        
         body.classList.remove('dark-mode', 'light-mode');
         body.classList.add(newTheme);
 
-        
         localStorage.setItem('theme', newTheme);
     });
 });
